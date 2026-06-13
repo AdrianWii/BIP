@@ -10,6 +10,8 @@ public class PlaceObjectOnPlane : MonoBehaviour
 {
     [SerializeField] private ARRaycastManager raycastManager;
     [SerializeField] private GameObject prefabToPlace;
+    [SerializeField] private bool alignVisualBottomToPlane = true;
+    [SerializeField] private bool showDebugText = true;
     [SerializeField] private bool addBlobShadow = true;
     [SerializeField] private float shadowSize = 0.65f;
     [SerializeField, Range(0f, 1f)] private float shadowOpacity = 0.68f;
@@ -17,21 +19,88 @@ public class PlaceObjectOnPlane : MonoBehaviour
     private static readonly List<ARRaycastHit> Hits = new();
     private static Mesh shadowMesh;
     private static Material shadowMaterial;
+    private bool warnedMissingPrefab;
+    private string status = "Tap a detected plane to place object.";
 
     void Update()
     {
         if (!TryGetPressPosition(out var screenPosition)) return;
 
-        if (raycastManager.Raycast(screenPosition, Hits, TrackableType.PlaneWithinPolygon))
+        if (prefabToPlace == null)
+        {
+            if (!warnedMissingPrefab)
+            {
+                warnedMissingPrefab = true;
+                status = "Missing prefabToPlace.";
+                Debug.LogWarning("PlaceObjectOnPlane: prefabToPlace is empty. Assign Security Keypad in the Inspector.");
+            }
+
+            return;
+        }
+
+        var trackableTypes = TrackableType.PlaneWithinPolygon
+            | TrackableType.PlaneWithinBounds
+            | TrackableType.PlaneEstimated;
+
+        if (raycastManager.Raycast(screenPosition, Hits, trackableTypes))
         {
             Pose hitPose = Hits[0].pose;
-            Instantiate(prefabToPlace, hitPose.position, hitPose.rotation);
+            var placedObject = Instantiate(prefabToPlace, hitPose.position, hitPose.rotation);
+
+            if (alignVisualBottomToPlane)
+            {
+                AlignVisualBottomToPose(placedObject, hitPose);
+            }
+
+            status = $"Placed {prefabToPlace.name}.";
+            Debug.Log($"PlaceObjectOnPlane: {status}");
 
             if (addBlobShadow)
             {
                 CreateBlobShadow(hitPose);
             }
         }
+        else
+        {
+            status = "No plane hit. Move phone around, then tap table/floor.";
+            Debug.Log($"PlaceObjectOnPlane: {status}");
+        }
+    }
+
+    private void AlignVisualBottomToPose(GameObject placedObject, Pose hitPose)
+    {
+        var renderers = placedObject.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0)
+        {
+            return;
+        }
+
+        var bounds = renderers[0].bounds;
+        for (int i = 1; i < renderers.Length; i++)
+        {
+            bounds.Encapsulate(renderers[i].bounds);
+        }
+
+        var bottomCenter = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
+        placedObject.transform.position += hitPose.position - bottomCenter;
+    }
+
+    private void OnGUI()
+    {
+        if (!showDebugText)
+        {
+            return;
+        }
+
+        var rect = new Rect(24f, 140f, Screen.width - 48f, 90f);
+        var style = new GUIStyle(GUI.skin.label)
+        {
+            fontSize = 24,
+            normal = { textColor = Color.white },
+            wordWrap = true
+        };
+
+        GUI.Label(rect, $"PlaceObjectOnPlane: {status}", style);
     }
 
     private void CreateBlobShadow(Pose hitPose)
