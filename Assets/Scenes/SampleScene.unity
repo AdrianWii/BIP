@@ -292,6 +292,7 @@ GameObject:
   - component: {fileID: 719769654}
   - component: {fileID: 719769656}
   - component: {fileID: 719769657}
+  - component: {fileID: 719769658}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -390,7 +391,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719769651}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1d6dd0241afb4e928176aa12d50aae3, type: 3}
   m_Name: 
@@ -404,6 +405,37 @@ MonoBehaviour:
   coinLocalPosition: {x: 0, y: 0.05, z: 0}
   coinLocalEulerAngles: {x: 90, y: 0, z: 0}
   coinWorldScale: {x: 0.15, y: 0.15, z: 0.15}
+--- !u!114 &719769658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719769651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a003f5f1ab21406aad5d370c4365957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ImageTrackedCollectibles
+  trackedImageManager: {fileID: 719769656}
+  arCamera: {fileID: 1938735751}
+  playerStats: {fileID: 1964602098}
+  showDebugText: 1
+  collectibles:
+  - imageName: faculty
+    collectibleId: f
+    prefab: {fileID: 8593933119539824022, guid: a8244eeb696ee429f9abdcb1991deb64, type: 3}
+    points: 20
+    localPosition: {x: 0, y: 0, z: 0}
+    localEulerAngles: {x: 0, y: 0, z: 0}
+    worldScale: {x: 0.15, y: 0.15, z: 0.15}
+  - imageName: tadeusz-kosciuszko
+    collectibleId: tk
+    prefab: {fileID: 3219100132830163551, guid: bfbf2e8ba019245148ca1709095f4007, type: 3}
+    points: 30
+    localPosition: {x: 0, y: 0, z: 0}
+    localEulerAngles: {x: 0, y: 0, z: 0}
+    worldScale: {x: 0.15, y: 0.15, z: 0.15}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,6 +870,50 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1964602097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1964602099}
+  - component: {fileID: 1964602098}
+  m_Layer: 0
+  m_Name: PlayerStats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1964602098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964602097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cdd56809a6944f42800b3707ff2dbaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
+--- !u!4 &1964602099
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964602097}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.20119, y: -0, z: -0.07814}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -847,3 +923,4 @@ SceneRoots:
   - {fileID: 1927123702}
   - {fileID: 719769653}
   - {fileID: 855008416}
+  - {fileID: 1964602099}
