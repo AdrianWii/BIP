@@ -859,10 +859,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Security Keypad
       objectReference: {fileID: 0}
-    - target: {fileID: 6951507932709293649, guid: c5b567d5c880e4593b094bb6ff43adb5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
