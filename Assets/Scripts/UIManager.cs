@@ -5,10 +5,16 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    [Header("References")]
+    [SerializeField] private ImageTrackedCollectibles collectibles;
+    [SerializeField] private PlayerStats playerStats;
+
     [Header("UI")]
     [SerializeField] private GameObject uiRoot;
-    [SerializeField] private TMP_Text paintingsText;
-    [SerializeField] private TMP_Text banknotesText;
+
+    [SerializeField] private TMP_Text statusText;
+    [SerializeField] private TMP_Text collectedText;
+    [SerializeField] private TMP_Text pointsText;
 
     private void Awake()
     {
@@ -21,22 +27,73 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
+    private void OnEnable()
+    {
+        if (collectibles != null)
+        {
+            collectibles.StatusChanged += UpdateStatus;
+        }
+
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged += UpdateStats;
+        }
+    }
+
     private void Start()
     {
-        RefreshStatsUI();
+        UpdateStats();
+
+        if (statusText != null)
+        {
+            statusText.text = "Collectibles: Ready";
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (collectibles != null)
+        {
+            collectibles.StatusChanged -= UpdateStatus;
+        }
+
+        if (playerStats != null)
+        {
+            playerStats.StatsChanged -= UpdateStats;
+        }
     }
 
     public void ToggleUI()
     {
-        uiRoot.SetActive(!uiRoot.activeSelf);
+        if (uiRoot != null)
+        {
+            uiRoot.SetActive(!uiRoot.activeSelf);
+        }
     }
 
-    public void RefreshStatsUI()
+    private void UpdateStatus(string status)
     {
-        int paintings = PlayerPrefs.GetInt("PaintingsCollected", 0);
-        int banknotes = PlayerPrefs.GetInt("BanknotesCollected", 0);
+        if (statusText != null)
+        {
+            statusText.text = $"Collectibles: {status}";
+        }
+    }
 
-        paintingsText.text = $"Paintings: {paintings}/5";
-        banknotesText.text = $"Banknotes: {banknotes}/5";
+    private void UpdateStats()
+    {
+        if (playerStats == null)
+        {
+            return;
+        }
+
+        if (collectedText != null)
+        {
+            collectedText.text = $"Collected: {playerStats.CollectedCount}";
+        }
+
+        if (pointsText != null)
+        {
+            pointsText.text = $"Points: {playerStats.TotalPoints}";
+        }
     }
 }
