@@ -27,3 +27,13 @@ MonoBehaviour:
     m_SpecifySize: 1
     m_Name: logo
     m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5255431923427078295
+      m_GuidHigh: 2929793544421882543
+    m_SerializedTextureGuid:
+      m_GuidLow: 12174575315809339500
+      m_GuidHigh: 15984406509309971610
+    m_Size: {x: 0, y: 0}
+    m_SpecifySize: 0
+    m_Name: plane
+    m_Texture: {fileID: 0}
