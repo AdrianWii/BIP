@@ -5,9 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+  - enabled: 0
+    path: Assets/Scenes/PlaneScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/Scenes/FaceTracking.unity
+    guid: fc3da9f7a598f034781acbb50a4f9119
+  - enabled: 0
+    path: Assets/Scenes/ObjectScaling.unity
+    guid: 7d604c74d0f8e684fa979a861e0c94c3
+  - enabled: 1
+    path: Assets/Scenes/PlayerHealth.unity
+    guid: b2e177924fb09ef47bc27a241a675b49
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: faa30bf44e608429e87a2c29dae2812b, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
