@@ -85,7 +85,7 @@ public class PlaceObjectOnPlane : MonoBehaviour
         placedObject.transform.position += hitPose.position - bottomCenter;
     }
 
-    private void OnGUI()
+/*    private void OnGUI()
     {
         if (!showDebugText)
         {
@@ -101,7 +101,7 @@ public class PlaceObjectOnPlane : MonoBehaviour
         };
 
         GUI.Label(rect, $"PlaceObjectOnPlane: {status}", style);
-    }
+    }*/
 
     private void CreateBlobShadow(Pose hitPose)
     {
