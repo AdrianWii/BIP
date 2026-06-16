@@ -3,29 +3,16 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance { get; private set; }
 
     [Header("References")]
     [SerializeField] private ImageTrackedCollectibles collectibles;
     [SerializeField] private PlayerStats playerStats;
-
-    [Header("UI")]
-    [SerializeField] private GameObject uiRoot;
+    [SerializeField] private CountdownTimer countdownTimer;
 
     [SerializeField] private TMP_Text statusText;
     [SerializeField] private TMP_Text collectedText;
     [SerializeField] private TMP_Text pointsText;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-    }
 
     private void OnEnable()
     {
@@ -63,12 +50,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ToggleUI()
+    public void ResetStats()
     {
-        if (uiRoot != null)
-        {
-            uiRoot.SetActive(!uiRoot.activeSelf);
-        }
+        playerStats.ResetAllProgressInThisApp();
+        countdownTimer.ResetTimer();
     }
 
     private void UpdateStatus(string status)

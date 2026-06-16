@@ -165,7 +165,7 @@ public class ImageTrackedCollectibles : MonoBehaviour
         if (playerStats != null && playerStats.IsCollected(config.collectibleId))
         {
             HideObject(trackedImage.trackableId);
-            SetStatus($"'{config.collectibleId}' already collected.");
+            SetStatus($"'{imageName}' already collected.");
             return;
         }
 
@@ -349,27 +349,6 @@ public class ImageTrackedCollectibles : MonoBehaviour
         renderer.sharedMaterial = material;
     }
 
-    private void OnGUI()
-    {
-        if (!showDebugText)
-        {
-            return;
-        }
-
-        var rect = new Rect(24f, 24f, Screen.width - 48f, 140f);
-
-        var style = new GUIStyle(GUI.skin.label)
-        {
-            fontSize = 26,
-            normal = { textColor = Color.white },
-            wordWrap = true
-        };
-
-        var points = playerStats != null ? playerStats.TotalPoints : 0;
-        var count = playerStats != null ? playerStats.CollectedCount : 0;
-
-        GUI.Label(rect, $"Collectibles: {status}\nCollected: {count} | Points: {points}", style);
-    }
 
     private static bool TryGetPressPosition(out Vector2 screenPosition)
     {
